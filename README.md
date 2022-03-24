@@ -11,3 +11,7 @@
 - https://irinainina.github.io/threejs/day2/threejs8/
 - https://irinainina.github.io/threejs/day2/threejs9/
 - https://irinainina.github.io/threejs/day2/threejs10/
+- https://irinainina.github.io/threejs/day3/threejs11/
+- https://irinainina.github.io/threejs/day3/threejs12/
+- https://irinainina.github.io/threejs/day3/threejs13/
+- https://irinainina.github.io/threejs/day4/threejs14/
