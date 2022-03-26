@@ -17,3 +17,4 @@
 - https://irinainina.github.io/threejs/day4/threejs14/
 - https://irinainina.github.io/threejs/day5/threejs15/
 - https://irinainina.github.io/threejs/day5/threejs16/
+- https://irinainina.github.io/threejs/day5/threejs17/
