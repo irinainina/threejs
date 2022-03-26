@@ -1,3 +1,5 @@
+// https://stepik.org/lesson/582223/step/1?auth=login&unit=576957
+
 function main() {
   const width = window.innerWidth;
   const height = window.innerHeight;
