@@ -9,8 +9,9 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 const aspect = width / height;
 
-const renderer = new THREE.WebGLRenderer({antialias: true});
+const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 renderer.setSize( width, height );
+renderer.setClearColor(0x000000, 0.8);
 document.body.append( renderer.domElement );
 
 let earthOrbitRadius = 120;
@@ -21,8 +22,8 @@ let moonOrbitRadius = 15;
 let moonOrbitAngle = 0;
 let moonOrbitSpeed = 1.5;
 
-const camera = new THREE.PerspectiveCamera( 75, aspect, 1, 1000 );
-camera.position.z = 300;
+const camera = new THREE.PerspectiveCamera( 45, aspect, 1, 4000 );
+camera.position.z = 400;
 
 const scene = new THREE.Scene();
 
@@ -44,8 +45,8 @@ controls.zoomSpeed = 0.9;
 controls.minPolarAngle = 0; // radians
 controls.maxPolarAngle = Math.PI / 2; // radians
 
-controls.minDistance = 200;
-controls.maxDistance = 700;
+controls.minDistance = 220;
+controls.maxDistance = 2500;
 
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
@@ -55,7 +56,7 @@ renderCalls.push(function () {
 });
 
 // sun
-const sunGeometry = new THREE.SphereGeometry( 50, 60, 60 );
+const sunGeometry = new THREE.SphereGeometry( 50, 60, 30 );
 
 const loader1 = new THREE.TextureLoader(); 
 const sunMaterial = new THREE.MeshPhongMaterial({  
@@ -86,7 +87,7 @@ const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
 theEarthAndMoon.add(earthMesh);
 
 // moon
-const moonGeometry = new THREE.SphereGeometry( 2.5, 20, 20 );
+const moonGeometry = new THREE.SphereGeometry( 2.5, 15, 15 );
 
 const loader3 = new THREE.TextureLoader(); 
 const moonMaterial = new THREE.MeshPhongMaterial({
@@ -119,7 +120,7 @@ function render() {
   renderCalls.forEach((callback) => {
     callback();
   });
-
+  
   renderer.render(scene, camera);
   requestAnimationFrame(render);
 }
