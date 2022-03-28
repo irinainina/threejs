@@ -2,3 +2,27 @@ body {
   margin: 0;
   overflow: hidden;
 }
+.btns {
+  position: absolute;
+  bottom: 15px;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: rgba(162, 171, 179, 0.4);
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+  margin: 0 7px;
+}
+.btn-next {
+  transform: rotate(180deg);
+}
+.btn:hover {
+  background-color: rgba(162, 171, 179, 0.55);
+}

@@ -20,3 +20,4 @@
 - https://irinainina.github.io/threejs/day5/threejs17/
 - https://irinainina.github.io/threejs/day6/threejs18/
 - https://irinainina.github.io/threejs/day6/threejs19/
+- https://irinainina.github.io/threejs/day7/threejs20/

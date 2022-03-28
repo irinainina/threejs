@@ -1,144 +1,164 @@
-// https://stepik.org/lesson/582229/step/1?auth=login&unit=576963
+const container = document.querySelector('.container');
+const btnPrev = document.querySelector('.btn-prev');
+const btnNext = document.querySelector('.btn-next');
+let imgNum = 1;
+let camera, scene, renderer, texture;
 
-const width = window.innerWidth;
-const height = window.innerHeight;
-const aspect = width / height;
+let isUserInteracting = false,
+  onPointerDownMouseX = 0,
+  onPointerDownMouseY = 0,
+  lon = 0,
+  onPointerDownLon = 0,
+  lat = 0,
+  onPointerDownLat = 0,
+  phi = 0,
+  theta = 0;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(width, height);
-document.body.append(renderer.domElement);
+init();
+animate();
 
-const camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
-camera.position.set(0, 10, 20);
-camera.lookAt(0, 0, 0);
+function init() {
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1100 );
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color('white');
+  scene = new THREE.Scene();
 
-const loader = new THREE.TextureLoader();
+  const geometry = new THREE.SphereGeometry(500, 60, 40);
+  // invert the geometry on the x-axis so that all of the faces point inward
+  geometry.scale(-1, 1, 1);
 
-const planeSize = 40;
+  texture = new THREE.TextureLoader().load(`./assets/img/bg${imgNum}.jpg`);
+  const material = new THREE.MeshBasicMaterial({ map: texture });
 
-const texture = loader.load('./assets/img/checker.png');
-texture.wrapS = THREE.RepeatWrapping;
-texture.wrapT = THREE.RepeatWrapping;
-texture.magFilter = THREE.NearestFilter;
-const repeats = planeSize / 2;
-texture.repeat.set(repeats, repeats);
+  const mesh = new THREE.Mesh(geometry, material);
 
-const planeGeo = new THREE.PlaneGeometry(planeSize, planeSize);
-const planeMat = new THREE.MeshBasicMaterial({
-  map: texture,
-  side: THREE.DoubleSide,
-});
-planeMat.color.setRGB(1.5, 1.5, 1.5);
-const mesh = new THREE.Mesh(planeGeo, planeMat);
-mesh.rotation.x = Math.PI * -0.5;
-scene.add(mesh);
+  scene.add(mesh);
 
-const shadowTexture = loader.load('./assets/img/roundshadow.png');
-const sphereShadowBases = [];
-{
-  const sphereRadius = 1;
-  const sphereWidthDivisions = 32;
-  const sphereHeightDivisions = 16;
-  const sphereGeo = new THREE.SphereGeometry(
-    sphereRadius,
-    sphereWidthDivisions,
-    sphereHeightDivisions
-  );
+  renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
 
-  const planeSize = 1;
-  const shadowGeo = new THREE.PlaneGeometry(planeSize, planeSize);
+  container.style.touchAction = 'none';
+  container.addEventListener('pointerdown', onPointerDown);
 
-  const numSpheres = 15;
-  for (let i = 0; i < numSpheres; ++i) {
-    // сделайте основу для тени и сферы. поэтому они двигаются вместе.
-    const base = new THREE.Object3D();
-    scene.add(base);
+  document.addEventListener('wheel', onDocumentMouseWheel);
 
-    // добавляем тень к базе
-    // Примечание: мы создаем новый материал для каждой сферы, чтобы мы могли установить прозрачность материала этой сферы отдельно.
-    const shadowMat = new THREE.MeshBasicMaterial({
-      map: shadowTexture,
-      transparent: true, // чтобы мы могли видеть землю
-      depthWrite: false, // поэтому нам не нужно сортировать
-    });
-    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
-    shadowMesh.position.y = 0.001; // так что мы немного над землей
-    shadowMesh.rotation.x = Math.PI * -0.5;
-    const shadowSize = sphereRadius * 4;
-    shadowMesh.scale.set(shadowSize, shadowSize, shadowSize);
-    base.add(shadowMesh);
-
-    // добавить сферу к основе
-    const u = i / numSpheres;
-    const sphereMat = new THREE.MeshPhongMaterial();
-    sphereMat.color.setHSL(u, 1, 0.75);
-    const sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
-    sphereMesh.position.set(0, sphereRadius + 2, 0);
-    base.add(sphereMesh);
-
-    // запомните все 3 плюс положение y
-    sphereShadowBases.push({
-      base,
-      sphereMesh,
-      shadowMesh,
-      y: sphereMesh.position.y,
-    });
-  }
-}
-
-const skyColor = 0xb1e1ff; // светло-синий
-const groundColor = 0xb97a20; // коричневато-оранжевый
-const intensity1 = 0.25;
-const light1 = new THREE.HemisphereLight(skyColor, groundColor, intensity1);
-scene.add(light1);
-
-const color = 0xffffff;
-const intensity2 = 0.75;
-const light2 = new THREE.DirectionalLight(color, intensity2);
-light2.position.set(0, 10, 5);
-light2.target.position.set(-5, 0, 0);
-scene.add(light2);
-scene.add(light2.target);
-
-function render(time) {
-  time *= 0.001; //конвертировать в секунды
-
-  sphereShadowBases.forEach((sphereShadowBase, ndx) => {
-    const { base, sphereMesh, shadowMesh, y } = sphereShadowBase;
-
-    //u - это значение, которое изменяется от 0 до 1, когда мы перебираем сферы
-    const u = ndx / sphereShadowBases.length;
-
-    // вычислить позицию для этой базы. Это переместит и сферу, и ее тень.
-    const speed = time * 0.2;
-    const angle = speed + u * Math.PI * 2 * (ndx % 1 ? 1 : -1);
-    const radius = Math.sin(speed - ndx) * 10;
-    base.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
-
-    // yOff - это значение от 0 до 1.
-    const yOff = Math.abs(Math.sin(time * 2 + ndx));
-    //перемещать сферу вверх и вниз
-    sphereMesh.position.y = y + THREE.MathUtils.lerp(-2, 2, yOff);
-    // исчезать тени по мере того, как сфера поднимается
-    shadowMesh.material.opacity = THREE.MathUtils.lerp(1, 0.25, yOff);
+  document.addEventListener('dragover', function (event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
   });
 
-  renderer.render(scene, camera);
+  document.addEventListener('dragenter', function () {
+    document.body.style.opacity = 0.5;
+  });
 
-  requestAnimationFrame(render);
+  document.addEventListener('dragleave', function () {
+    document.body.style.opacity = 1;
+  });
+
+  document.addEventListener('drop', function (event) {
+    event.preventDefault();
+
+    const reader = new FileReader();
+    reader.addEventListener('load', function (event) {
+      material.map.image.src = event.target.result;
+      material.map.needsUpdate = true;
+    });
+    reader.readAsDataURL(event.dataTransfer.files[0]);
+
+    document.body.style.opacity = 1;
+  });
+
+  window.addEventListener('resize', onWindowResize);
 }
-
-render(1);
 
 function onWindowResize() {
-  const newWidth = window.innerWidth;
-  const newHeight = window.innerHeight;
-  const newAspect = newWidth / newHeight;
-  camera.aspect = newAspect;
+  camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(newWidth, newHeight);
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }
-window.addEventListener('resize', onWindowResize);
+
+function onPointerDown(event) {
+  if (event.isPrimary === false) return;
+
+  isUserInteracting = true;
+
+  onPointerDownMouseX = event.clientX;
+  onPointerDownMouseY = event.clientY;
+
+  onPointerDownLon = lon;
+  onPointerDownLat = lat;
+
+  document.addEventListener('pointermove', onPointerMove);
+  document.addEventListener('pointerup', onPointerUp);
+}
+
+function onPointerMove(event) {
+  if (event.isPrimary === false) return;
+
+  lon = (onPointerDownMouseX - event.clientX) * 0.1 + onPointerDownLon;
+  lat = (event.clientY - onPointerDownMouseY) * 0.1 + onPointerDownLat;
+}
+
+function onPointerUp() {
+  if (event.isPrimary === false) return;
+
+  isUserInteracting = false;
+
+  document.removeEventListener('pointermove', onPointerMove);
+  document.removeEventListener('pointerup', onPointerUp);
+}
+
+function onDocumentMouseWheel(event) {
+  const fov = camera.fov + event.deltaY * 0.05;
+
+  camera.fov = THREE.MathUtils.clamp(fov, 10, 75);
+
+  camera.updateProjectionMatrix();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  update();
+}
+
+function update() {
+  if (isUserInteracting === false) {
+    lon += 0.1;
+  }
+
+  lat = Math.max(-85, Math.min(85, lat));
+  phi = THREE.MathUtils.degToRad(90 - lat);
+  theta = THREE.MathUtils.degToRad(lon);
+
+  const x = 500 * Math.sin(phi) * Math.cos(theta);
+  const y = 500 * Math.cos(phi);
+  const z = 500 * Math.sin(phi) * Math.sin(theta);
+
+  camera.lookAt(x, y, z);
+
+  renderer.render(scene, camera);
+}
+
+
+btnNext.addEventListener('click', function() {
+  imgNum < 16 ? imgNum++ : imgNum = 1;
+  container.innerHTML = '';
+  init();
+  update();
+})
+btnPrev.addEventListener('click', function() {
+  imgNum > 1 ? imgNum-- : imgNum = 16;
+  container.innerHTML = '';
+  init();
+  update();
+})
+
+function preloadSummerImages() {
+  for(let i = 1; i <= 6; i++) {
+    const img = new Image();
+    img.src = `./assets/img/bg${i}.jpg`;
+  }
+}
+preloadSummerImages();
