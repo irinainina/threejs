@@ -4,6 +4,7 @@
 
 import * as THREE from 'three';
 import { OrbitControls } from './js/OrbitControls.js';
+import data from './js/data.js';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -65,6 +66,7 @@ const sunMaterial = new THREE.MeshPhongMaterial({
 });
 
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
+sunMesh.name = 'sun';
 sunMesh.position.z = -50;
 scene.add(sunMesh);
 
@@ -83,7 +85,7 @@ const earthMaterial = new THREE.MeshPhongMaterial({
 });
 
 const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-// earthMesh.position.x = 20;
+earthMesh.name = 'earth';
 theEarthAndMoon.add(earthMesh);
 
 // moon
@@ -96,8 +98,47 @@ const moonMaterial = new THREE.MeshPhongMaterial({
 });
 
 const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
-// moonMesh.position.x = 4;
+moonMesh.name = 'moon';
 theEarthAndMoon.add(moonMesh);
+
+// information panel
+let spaseObjectName;
+let info;
+function createPanel() {
+  const panel = document.createElement('div');
+  panel.classList.add('panel');
+  const panelTitle = document.createElement('h1');
+  panelTitle.textContent = 'Welcome to Universe';
+  panel.append(panelTitle);
+  spaseObjectName = document.createElement('h2');
+  panel.append(spaseObjectName);
+  info = document.createElement('p');
+  info.innerHTML = data.info;
+  panel.append(info);
+  document.body.append(panel);
+}
+createPanel();
+
+// click on spase object
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function onMouseDown( event ) {
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+	raycaster.setFromCamera( mouse, camera );
+	const intersects = raycaster.intersectObjects( scene.children );
+  if(intersects.length) {
+    spaseObjectName.textContent = intersects[0].object.name;
+    info.innerHTML = data[intersects[0].object.name];
+  } else {
+    spaseObjectName.textContent = '';
+    info.innerHTML = data.info;
+  }
+	
+}
+window.addEventListener( 'mousedown', onMouseDown, false );
+
 
 function render() {
   sunMesh.rotation.y += 0.003;
@@ -135,3 +176,6 @@ function onWindowResize() {
   renderer.setSize(newWidth, newHeight);
 }
 window.addEventListener('resize', onWindowResize);
+
+
+

@@ -3,5 +3,49 @@ body {
   overflow: hidden;
   background-image: url("./assets/img/space.jpg");
   background-size: cover;
+  font-family: 'Raleway', sans-serif;
 }
+
+.panel {
+  position: absolute;
+  width: 400px;
+  min-height: 380px;
+  top: 50px;
+  left: 40px;
+  pointer-events: none;
+  user-select: none;
+  color: #fff;
+}
+
+h1 {
+  letter-spacing: 1.5px;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+h2 {
+  min-height: 45px;
+  letter-spacing: 1.5px;
+  text-transform: capitalize;
+  font-size: 36px;
+  font-weight: 600;
+  color: #F66120;
+  margin: 0;
+  margin-left: 5px;
+  padding-left: 40px;
+  border-left: 3px solid #fff;
+}
+
+p {
+  min-height: 135px;
+  font-size: 22px;
+  line-height: 2;
+  margin: 0;
+  margin-left: 5px;
+  letter-spacing: 1.5px;
+  padding-left: 40px;
+  border-left: 3px solid #fff;
+}
+
+
 
