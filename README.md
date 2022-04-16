@@ -1,24 +1,30 @@
 # threejs
 
-- https://irinainina.github.io/threejs/day1/threejs0/
-- https://irinainina.github.io/threejs/day1/threejs1/
-- https://irinainina.github.io/threejs/day1/threejs2/
-- https://irinainina.github.io/threejs/day1/threejs3/
-- https://irinainina.github.io/threejs/day1/threejs4/
-- https://irinainina.github.io/threejs/day1/threejs5/
-- https://irinainina.github.io/threejs/day1/threejs6/
-- https://irinainina.github.io/threejs/day1/threejs7/
-- https://irinainina.github.io/threejs/day2/threejs8/
-- https://irinainina.github.io/threejs/day2/threejs9/
-- https://irinainina.github.io/threejs/day2/threejs10/
-- https://irinainina.github.io/threejs/day3/threejs11/
-- https://irinainina.github.io/threejs/day3/threejs12/
-- https://irinainina.github.io/threejs/day3/threejs13/
-- https://irinainina.github.io/threejs/day4/threejs14/
-- https://irinainina.github.io/threejs/day5/threejs15/
-- https://irinainina.github.io/threejs/day5/threejs16/
-- https://irinainina.github.io/threejs/day5/threejs17/
-- https://irinainina.github.io/threejs/day6/threejs18/
-- https://irinainina.github.io/threejs/day6/threejs19/
-- https://irinainina.github.io/threejs/day7/threejs20/
-- https://irinainina.github.io/threejs/day7/threejs21/
+- Random boxes movie https://irinainina.github.io/threejs/day1/threejs0/
+- Static sphere https://irinainina.github.io/threejs/day1/threejs1/
+- Animation sphere https://irinainina.github.io/threejs/day1/threejs2/
+- Animation sphere with gui https://irinainina.github.io/threejs/day1/threejs3/
+- Box https://irinainina.github.io/threejs/day1/threejs4/
+- Sphere https://irinainina.github.io/threejs/day1/threejs5/
+- Torus https://irinainina.github.io/threejs/day1/threejs6/
+- Torus (copy) https://irinainina.github.io/threejs/day1/threejs7/
+- Several shapes https://irinainina.github.io/threejs/day2/threejs8/
+- Lines https://irinainina.github.io/threejs/day2/threejs9/
+- Primitives https://irinainina.github.io/threejs/day2/threejs10/
+- Model (berry) https://irinainina.github.io/threejs/day3/threejs11/
+- Model (ladybug) with Orbit control https://irinainina.github.io/threejs/day3/threejs12/
+- 3D fonts https://irinainina.github.io/threejs/day3/threejs13/
+- Models (flower with ground) https://irinainina.github.io/threejs/day4/threejs14/
+- Planets https://irinainina.github.io/threejs/day5/threejs15/
+- Planets mowie https://irinainina.github.io/threejs/day5/threejs16/
+- Solar system https://irinainina.github.io/threejs/day5/threejs17/
+- Texture https://irinainina.github.io/threejs/day6/threejs18/
+- Shadow https://irinainina.github.io/threejs/day6/threejs19/
+- Panorama https://irinainina.github.io/threejs/day7/threejs20/
+- Model (ancient sculpture) https://irinainina.github.io/threejs/day7/threejs21/
+- Three.js Journey Part-1. Webpack https://irinainina.github.io/threejs/day8/threejs22/dist/
+- Three.js Journey Part-1 Теория https://irinainina.github.io/threejs/day8/threejs-journey-part-1.md
+- Three.js Journey Day2. https://irinainina.github.io/threejs/day9/threejs23/dist/
+- Three.js Journey Part-2 Теория https://irinainina.github.io/threejs/day9/threejs-journey-part-2.md
+- Three.js Journey Day3. https://irinainina.github.io/threejs/day10/threejs24/dist/
+- Three.js Journey Part-3 Теория https://irinainina.github.io/threejs/day10/threejs-journey-part-3.md
