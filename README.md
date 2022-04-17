@@ -22,9 +22,12 @@
 - Shadow https://irinainina.github.io/threejs/day6/threejs19/
 - Panorama https://irinainina.github.io/threejs/day7/threejs20/
 - Model (ancient sculpture) https://irinainina.github.io/threejs/day7/threejs21/
-- Three.js Journey Part-1. Webpack https://irinainina.github.io/threejs/day8/threejs22/dist/
+- Three.js Journey Part-1. Webpack https://irinainina.github.io/threejs/day8/three22-webpack/dist/
 - Three.js Journey Part-1 Теория https://irinainina.github.io/threejs/day8/threejs-journey-part-1.md
-- Three.js Journey Day2. https://irinainina.github.io/threejs/day9/threejs23/dist/
+- Three.js Journey Part-2. https://irinainina.github.io/threejs/day9/threejs23/dist/
 - Three.js Journey Part-2 Теория https://irinainina.github.io/threejs/day9/threejs-journey-part-2.md
-- Three.js Journey Day3. https://irinainina.github.io/threejs/day10/threejs24/dist/
+- Three.js Journey Part-3. Материалы, текстуры https://irinainina.github.io/threejs/day10/threejs24/dist/
+- Three.js Journey Part-3. 3D-текст https://irinainina.github.io/threejs/day10/threejs25/
+- Three.js Journey Part-3. Свет https://irinainina.github.io/threejs/day10/threejs26/
+- Three.js Journey Part-3. Тень https://irinainina.github.io/threejs/day10/threejs27/
 - Three.js Journey Part-3 Теория https://irinainina.github.io/threejs/day10/threejs-journey-part-3.md
