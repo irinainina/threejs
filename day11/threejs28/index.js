@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from './js/OrbitControls.js';
-const gui = new dat.GUI();
+import { GLTFLoader } from './js/GLTFLoader.js';
+const gui = new dat.GUI({ closed: true });
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -167,24 +168,20 @@ scene.add(graves);
 const graveGeometry = new THREE.BoxBufferGeometry(0.6, 0.8, 0.2);
 const graveMaterial = new THREE.MeshStandardMaterial({ color: '#b2b6b1' });
 
-for (let i = 0; i < 50; i++) {
-  const angle = Math.random() * Math.PI * 2; // Random angle
-  const radius = 3 + Math.random() * 6; // Random radius
-  const x = Math.cos(angle) * radius; // Get the x position using cosinus
-  const z = Math.sin(angle) * radius; // Get the z position using sinus
+for (let i = 0; i < 40; i++) {
+  const angle = Math.random() * Math.PI * 2;
+  const radius = 3 + Math.random() * 4.5;
+  const x = Math.cos(angle) * radius;
+  const z = Math.sin(angle) * radius;
 
-  // Create the mesh
   const grave = new THREE.Mesh(graveGeometry, graveMaterial);
   grave.castShadow = true;
 
-  // Position
   grave.position.set(x, 0.3, z);
 
-  // Rotation
   grave.rotation.z = (Math.random() - 0.5) * 0.4;
   grave.rotation.y = (Math.random() - 0.5) * 0.4;
 
-  // Add to the graves container
   graves.add(grave);
 }
 
@@ -226,36 +223,103 @@ bush3.castShadow = true;
 bush4.castShadow = true;
 floor.receiveShadow = true;
 
-moonLight.shadow.mapSize.width = 256
-moonLight.shadow.mapSize.height = 256
-moonLight.shadow.camera.far = 15
+moonLight.shadow.mapSize.width = 256;
+moonLight.shadow.mapSize.height = 256;
+moonLight.shadow.camera.far = 15;
 
-doorLight.shadow.mapSize.width = 256
-doorLight.shadow.mapSize.height = 256
-doorLight.shadow.camera.far = 7
+doorLight.shadow.mapSize.width = 256;
+doorLight.shadow.mapSize.height = 256;
+doorLight.shadow.camera.far = 7;
 
-ghost1.shadow.mapSize.width = 256
-ghost1.shadow.mapSize.height = 256
-ghost1.shadow.camera.far = 7
+ghost1.shadow.mapSize.width = 256;
+ghost1.shadow.mapSize.height = 256;
+ghost1.shadow.camera.far = 7;
 
-ghost2.shadow.mapSize.width = 256
-ghost2.shadow.mapSize.height = 256
-ghost2.shadow.camera.far = 7
+ghost2.shadow.mapSize.width = 256;
+ghost2.shadow.mapSize.height = 256;
+ghost2.shadow.camera.far = 7;
 
-ghost3.shadow.mapSize.width = 256
-ghost3.shadow.mapSize.height = 256
-ghost3.shadow.camera.far = 7
+ghost3.shadow.mapSize.width = 256;
+ghost3.shadow.mapSize.height = 256;
+ghost3.shadow.camera.far = 7;
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
+const gltfLoader = new GLTFLoader();
+const tree = await gltfLoader.loadAsync('./models/tree.gltf');
+const fence = await gltfLoader.loadAsync('./models/fence.gltf');
+
+const frontFences = new THREE.Group();
+for (let i = 0; i !== 8; i++) {
+  const newFence = fence.scene.clone();
+  newFence.position.z = 7.5;
+  newFence.position.x = -7 + i * 2;
+  frontFences.add(newFence);
+}
+
+const backFences = new THREE.Group();
+for (let i = 0; i !== 8; i++) {
+  const newFence = fence.scene.clone();
+  newFence.position.z = -7.5;
+  newFence.position.x = -7 + i * 2;
+  backFences.add(newFence);
+}
+
+const leftFences = new THREE.Group();
+for (let i = 0; i !== 7; i++) {
+  const newFence = fence.scene.clone();
+  newFence.position.x = -8;
+  newFence.position.z = -6 + i * 2;
+  newFence.rotation.y = 1.5708;
+  leftFences.add(newFence);
+}
+
+const rightFences = new THREE.Group();
+for (let i = 0; i !== 7; i++) {
+  const newFence = fence.scene.clone();
+  newFence.position.x = 8;
+  newFence.position.z = -6 + i * 2;
+  newFence.rotation.y = 1.5708;
+  rightFences.add(newFence);
+}
+
+scene.add(frontFences, backFences, leftFences, rightFences);
+
+const tree1 = tree.scene.clone();
+tree1.position.x = -6;
+tree1.position.z = 5;
+tree1.rotation.y = 36;
+tree1.children[0].castShadow = true;
+
+const tree2 = tree.scene.clone();
+tree2.position.x = -7;
+tree2.position.z = -6;
+tree2.rotation.y = 36;
+tree2.children[0].castShadow = true;
+
+const tree3 = tree.scene.clone();
+tree3.position.x = 7;
+tree3.position.z = -2;
+tree3.rotation.y = 160;
+tree3.children[0].castShadow = true;
+
+const tree4 = tree.scene.clone();
+tree4.position.x = 4;
+tree4.position.z = -5;
+tree4.rotation.y = 280;
+tree4.children[0].castShadow = true;
+
+scene.add(tree1, tree2, tree3, tree4);
+
 function resize() {
   // Update sizes
-  width = window.innerWidth;
-  height = window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const aspect = width / height;
 
   // Update camera
-  camera.aspect = width / height;
+  camera.aspect = aspect;
   camera.updateProjectionMatrix();
 
   // Update renderer

@@ -32,4 +32,7 @@
 - Three.js Journey Part-3. Тень https://irinainina.github.io/threejs/day10/threejs27/
 - Three.js Journey Part-3 Теория https://irinainina.github.io/threejs/day10/threejs-journey-part-3.md
 - Three.js Journey Part-4. Дом с привидениями https://irinainina.github.io/threejs/day11/threejs28/
+- Three.js Journey Part-4. Particles-1 https://irinainina.github.io/threejs/day11/threejs29/
+- Three.js Journey Part-4. Particles-2 https://irinainina.github.io/threejs/day11/threejs29/
+- Three.js Journey Part-4. Particles-3 https://irinainina.github.io/threejs/day11/threejs29/
 - Three.js Journey Part-4 Теория https://irinainina.github.io/threejs/day11/threejs-journey-part-4.md
